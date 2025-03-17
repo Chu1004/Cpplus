@@ -1,0 +1,102 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <chrono>
+using namespace std;
+
+//insertion sort
+void insertionSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+//merge sort
+void merge(vector<int>& arr, int left, int right);
+void mergeSort(vector<int>& arr) {
+    merge(arr, 0, arr.size() - 1);
+}
+
+void merge(vector<int>& arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        merge(arr, left, mid);
+        merge(arr, mid + 1, right);
+        
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        
+        vector<int> L(n1), R(n2);
+        
+        for (int i = 0; i < n1; i++)
+            L[i] = arr[left + i];
+        for (int i = 0; i < n2; i++)
+            R[i] = arr[mid + 1 + i];
+        
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k++] = L[i++];
+            } else {
+                arr[k++] = R[j++];
+            }
+        }
+        
+        while (i < n1) {
+            arr[k++] = L[i++];
+        }
+        
+        while (j < n2) {
+            arr[k++] = R[j++];
+        }
+    }
+}
+
+//access random array by using vector
+vector<int> generateRandomArray(int size) {
+    vector<int> arr(size);
+    for (int i = 0; i < size; i++) {
+        arr[i] = rand() % 1000000;
+    }
+    return arr;
+}
+
+int main() {
+    //define size of the array
+	vector<int> sizes = {100,500,1000,2500, 5000,7500, 10000,25000 ,50000,75000, 100000};
+    
+    for (int size : sizes) {
+        cout << " Testing with array size: " << size << endl;
+
+		//generate the array we want to sort
+        vector<int> arr1 = generateRandomArray(size);
+        vector<int> arr2 = arr1;
+
+		
+		auto start = std::chrono::high_resolution_clock::now();
+        insertionSort(arr1);
+        auto end = std::chrono::high_resolution_clock::now();
+        chrono::duration<double> insertionSortTime = end - start;
+        //print time neede in insertion sort
+		cout << " Insertion Sort time: " << insertionSortTime.count() << " seconds" << endl;
+
+        start = std::chrono::high_resolution_clock::now();
+        mergeSort(arr2);
+        end = std::chrono::high_resolution_clock::now();
+        chrono::duration<double> mergeSortTime = end - start;
+        //print time neede in merge sort
+        cout << " Merge Sort time: " << mergeSortTime.count() << " seconds" << endl;
+
+        cout << endl;
+    }
+
+    return 0;
+}
