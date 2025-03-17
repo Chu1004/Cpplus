@@ -1,0 +1,102 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+vector<int> GCD(vector<int> a,vector<int> b){
+    vector<int> ans;
+    vector<int> count(0,'0');
+    int var=0;
+    vector<int> temA(a.begin(),a.end());
+    vector<int> temB(b.begin(),b.end());
+    int carry = 0;
+    while(!temA.empty()&&!trmB.empty()){
+        if((temA[0]%2==0)&&(temB[0]%2==0)){
+            for(int i=0;i<temA.size();i++){
+                int current = carry*10 + temA[i];
+                temA[i] = current / 2;
+                carry = current % 2;
+            }
+            for(int i=0;i<temB.size();i++){
+                int current = temB[i] + carry * 10;
+                temB[i] = current / 2;
+                carry = current % 2;
+            }
+            while(temA.size()>1&&temA.back()==0){
+                temA.pop_back();
+            }
+            while(temB.size()>1&&temB.back()==0){
+                temB.pop_back();
+            }
+            var++;
+        }
+        else if(temA[0]%2==0){
+            for(int i = 0; i < temA.size(); i++){
+                int current = carry * 10 + temA[i];
+                temA[i] = current / 2;
+                carry = current % 2;
+            }
+            while(temA.size()>1&&temA.back()==0){
+                temA.pop_back();
+            }
+            var++;
+        }
+        else if(temB[0]%2==0){
+            for(int i=0;i<temB.size();i++){
+                int current = temB[i] + carry*10;
+                temB[i] = current / 2;
+                carry = current % 2;
+            }
+            while(temB.size()>1&&temB.back()==0){
+                temB.pop_back();
+            }
+            var++;
+        }
+        else{
+            if(temA>temB){
+                swap(temA,temB);
+            }
+            int bor=0;
+            for(int i= temB.size()-1,j=temA.size()-1;i>=0;i--,j--){
+                int sub = temB[i] - (j>=0?temA[j]:0)-borrow;
+                if(sub<0){
+                    sub+=10;
+                    bor=1;
+                }
+                else{
+                    bor=0;
+                }
+                temB[i]=sub;
+            }
+
+            while(temB.size()>1&&temB[0]==0){
+                temB.erase(tem.begin());
+                
+            }
+        }
+        return temB,var;
+            
+    }
+}
+
+vector<int> stovec(string num){
+    vector<int> result;
+    for(int i=0;i<num.size();i++){
+        result[i]=num[i];
+    }
+    return result;
+}
+vector<int> fina()
+
+int main(){
+    string in_a,in_b;
+    cout << "Please enter positive number: ";
+    cin >> in_a >> in_b;
+    vector<int> a = stovec(in_a);
+    vector<int> b= stovec(in_b);
+    int times;
+    vector<int> answer,times = GCD(a,b);
+    vector<int> fans(0,'0');
+    cout << endl;
+    return 0;
+}
